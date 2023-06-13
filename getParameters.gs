@@ -53,6 +53,17 @@ const 営業日カレンダー = カレンダーデータ.reduce(
     }, {}
 )
 
+const SlackBotトークン = 設定データ[設定データ.indexOf('SlackBotトークン')+1];
+const 投稿チャンネルID = 設定データ[設定データ.indexOf('投稿チャンネルID')+1];
+
+const アプリURL = 設定データ[設定データ.indexOf('webアプリURL')+1];
+
+const 月例通知ボット名 = 設定データ[設定データ.indexOf('月例通知ボット名')+1];
+const 月例通知文 = 設定データ[設定データ.indexOf('月例点検通知')+1];
+
+const 隔週通知ボット名 = 設定データ[設定データ.indexOf('隔週通知ボット名')+1];
+const 隔週通知文 = 設定データ[設定データ.indexOf('隔週点検通知')+1];
+
 function test(){
   return
 }

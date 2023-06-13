@@ -35,7 +35,10 @@ function sendMonthlyRemind(){
   const 新規月例点検表 = 月例点検表テンプレ.copyTo(月別DBスプレッドシート);
   新規月例点検表.setName(Utilities.formatDate(now, 'JST', 'yyyy-MM'))
 
-  console.log('月例点検の日です')
+  const 通知メッセージ = '<!channel>\n' + 月例通知文 + '\n<'+ アプリURL +'|点検ツール>';
+  const option = {username: 月例通知ボット名}
+  slackApp = SlackApp.create(ボットトークン);
+  slackApp.postMessage(投稿チャンネルID, 通知メッセージ, option);
 
   スクリプトプロパティ.setProperty('月例点検実施日', now);
 }
@@ -45,7 +48,10 @@ function sendWeeklyRemind(){
   const 新規隔週点検表 = 隔週点検表テンプレ.copyTo(週別DBスプレッドシート);
   新規隔週点検表.setName(Utilities.formatDate(now, 'JST', 'yyyy-MM-dd'))
 
-  console.log('隔週点検の日です')
+  const 通知メッセージ = '<!channel>\n' + 隔週通知文 + '\n<'+ アプリURL +'|点検ツール>';
+  const option = {username: 隔週通知ボット名}
+  slackApp = SlackApp.create(ボットトークン);
+  slackApp.postMessage(投稿チャンネルID, 通知メッセージ, option);
 
   スクリプトプロパティ.setProperty('隔週点検実施日', now);
 }

@@ -435,6 +435,8 @@
         clone.getElementById('status_select').setAttribute('id', 'status_select_' + num_selector);
         document.getElementById('weekly_report_container').appendChild(clone);
       }
+      addMonthlyReportItem()
+      addWeeklyReportItem()
 
       function addMonthlyStatusItem(data){
         const template = document.getElementById('status_item');
