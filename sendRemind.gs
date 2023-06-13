@@ -63,7 +63,7 @@ function sendProgressRemind(){
   const 経過時間 = Number(設定データ[設定データ.indexOf('経過時間リマインド')+1]);
 
   let 通知メッセージ = '';
-  const option = {username: '充電開始から '+経過時間+' 時間経過した機器があります！'}
+  const option = {username: '充電開始から '+経過時間+' 時間以上が経過した機器があります！'}
   
   let 充電中リスト = JSON.parse(スクリプトプロパティ.getProperty('充電中'));
   let 充電開始時間
