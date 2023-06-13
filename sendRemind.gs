@@ -1,17 +1,9 @@
-/*
-リマインダーが必要なタイミング
-- 充電中からn時間経過
-- 月初タイミング
-- 隔週点検のタイミング
-*/
-
 function 毎時実行(){
-  //　営業日のみ
-  if (営業日カレンダー[Utilities.formatDate(now, 'JST', 'yyyy-MM-dd')].status == '営業'){
+  //　営業日かつ営業時間内のみ
+  if (営業日カレンダー[Utilities.formatDate(now, 'JST', 'yyyy-MM-dd')].status == '営業' && 9 <= now.getHours() && now.getHours() < 17){
 
     // 毎日実行
     const メンテナンス時刻 = Number(設定データ[設定データ.indexOf('メンテナンス時刻')+1]);
-
     if (メンテナンス時刻 == now.getHours()){
 
       // 月例点検
