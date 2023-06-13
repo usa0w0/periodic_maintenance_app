@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+    <!-- DotGothic16 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+
+    <title>定期点検ツール</title>
+
+    <style>
+      body {
+        background-color: #CDC8B0;
+        background-image: linear-gradient(0deg, transparent calc(100% - 1px), #B4AE9A calc(100% - 1px)), linear-gradient(90deg, transparent calc(100% - 1px), #B4AE9A calc(100% - 1px));
+        background-size: 8px 8px;
+        background-repeat: repeat;
+        background-position: center center;
+        font-family: 'DotGothic16', sans-serif;
+      }
+
+      input[type="radio"]{
+        display: none;
+      }
+      .tab_wrap{
+        padding: 20px 30px 0 20px;
+        border-bottom: 2px solid #4D4B43;
+      }
+      .tab_label {
+        height: 30px;
+        width: 40vw;
+        margin-bottom: 5px;
+        padding-left: 10px;
+        letter-spacing: 0.1em;
+        background: #B4AE9A;
+        color: #4D4B43;
+      }
+      #tab_monthly:checked ~ .tab_wrap #label_monthly {
+        height: 45px;
+        margin-bottom: 0px;
+        background: #4D4B43;
+        color:#DAD4BB;
+      }
+      #tab_weekly:checked ~ .tab_wrap #label_weekly {
+        height: 45px;
+        margin-bottom: 0px;
+        background: #4D4B43;
+        color:#DAD4BB;
+      }
+
+      .title_wrap {
+        margin: 20px 25px;
+      }
+      .title {
+        display: none;
+        letter-spacing: 0.1em;
+      }
+      #tab_monthly:checked ~ .title_wrap #title_monthly {display: block;}
+      #tab_weekly:checked ~ .title_wrap #title_weekly {display: block;}
+
+      .description_wrap {
+        margin: 20px;
+        padding: 2px 3px;
+        background: #DAD4BB;
+        border-left: 7px solid #4D4B43;
+      }
+      .description {
+        margin: 0px;
+        padding-left: 5px;
+        border-left: 2px solid #4D4B43;
+      }
+
+      .main_wrap {
+        margin: 20px;
+        background: #DAD4BB;
+      }
+
+      .line_mark_top {
+        height: 10px;
+        margin: 10px;
+        border-bottom: 1px solid #B4AE9A;
+      }
+      .line_mark_bottom {
+        height: 10px;
+        margin: 10px;
+        border-top: 1px solid #B4AE9A;
+      }
+
+      .main {
+        margin: 10px;
+        display: none;
+      }
+      #tab_monthly:checked ~ .main_wrap #main_monthly {display: block;}
+      #tab_weekly:checked ~ .main_wrap #main_weekly {display: block;}
+
+      input[type="checkbox"]{
+        display: none;
+      }
+      .report {
+        margin-bottom: 30px;
+      }
+      .main_label {
+        color: #4D4B43;
+        padding: 5px 5px;
+      }
+
+      #tag_monthly_report:checked ~ #label_monthly_report{
+        color: #DAD4BB;
+        background: #4D4B43;
+      }
+      #tag_monthly_status:checked ~ #label_monthly_status{
+        color: #DAD4BB;
+        background: #4D4B43;
+      }
+      #tag_weekly_report:checked ~ #label_weekly_report{
+        color: #DAD4BB;
+        background: #4D4B43;
+      }
+      #tag_weekly_status:checked ~ #label_weekly_status{
+        color: #DAD4BB;
+        background: #4D4B43;
+      }
+
+      .label_text .bi-dash-square-fill {display: none;}
+      #tag_monthly_report:checked ~ #label_monthly_report .label_text .bi-plus-square-fill{display: none;}
+      #tag_monthly_report:checked ~ #label_monthly_report .label_text .bi-dash-square-fill{display: inline-block;}
+      #tag_monthly_status:checked ~ #label_monthly_status .label_text .bi-plus-square-fill{display: none;}
+      #tag_monthly_status:checked ~ #label_monthly_status .label_text .bi-dash-square-fill{display: inline-block;}
+      #tag_weekly_report:checked ~ #label_weekly_report .label_text .bi-plus-square-fill{display: none;}
+      #tag_weekly_report:checked ~ #label_weekly_report .label_text .bi-dash-square-fill{display: inline-block;}
+      #tag_weekly_status:checked ~ #label_weekly_status .label_text .bi-plus-square-fill{display: none;}
+      #tag_weekly_status:checked ~ #label_weekly_status .label_text .bi-dash-square-fill{display: inline-block;}
+
+      .main_contents {
+        display: none;
+      }
+      #tag_monthly_report:checked ~ #contents_monthly_report {display: block;}
+      #tag_monthly_status:checked ~ #contents_monthly_status {display: block;}
+      #tag_weekly_report:checked ~ #contents_weekly_report {display: block;}
+      #tag_weekly_status:checked ~ #contents_weekly_status {display: block;}
+
+      .report_item {
+        list-style-type: square;
+        margin-top: 10px;
+      }
+      select {
+        color: #4D4B43;
+        background-color: transparent;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #4D4B43;
+      }
+      a {
+        color: #4D4B43;
+      }
+      .btns {
+        margin-top: 10px;
+        color: #4D4B43;
+      }
+      .machine_text {
+        border-bottom: 1px solid #4D4B43;
+      }
+      .status_text {
+        border-bottom: 1px solid #4D4B43;
+      }
+      button {
+        color: #4D4B43;
+        background: transparent;
+        border: none;
+      }
+      .btn_show {
+        color: #4D4B43;
+        background: #DAD4BB;
+        border-radius: 2px;
+        border: 1px solid #4D4B43;
+      }
+    </style>
+
+    <!-- loading -->
+    <style>
+      /* ベースの本体 */
+      #loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: all 1s;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+      }
+      #loading.loaded {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      /* 001 */
+      .loader001,
+      .loader001:before,
+      .loader001:after {
+        background: #ffffff;
+        -webkit-animation: load1 1s infinite ease-in-out;
+        animation: load1 1s infinite ease-in-out;
+        width: 1em;
+        height: 4em;
+      }
+      .loader001 {
+        color: #ffffff;
+        text-indent: -9999em;
+        margin: 88px auto;
+        position: relative;
+        font-size: 11px;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+      }
+      .loader001:before,
+      .loader001:after {
+        position: absolute;
+        top: 0;
+        content: '';
+      }
+      .loader001:before {
+        left: -1.5em;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+      }
+      .loader001:after {
+        left: 1.5em;
+      }
+      @-webkit-keyframes load1 {
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 0;
+          height: 4em;
+        }
+        40% {
+          box-shadow: 0 -2em;
+          height: 5em;
+        }
+      }
+      @keyframes load1 {
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 0;
+          height: 4em;
+        }
+        40% {
+          box-shadow: 0 -2em;
+          height: 5em;
+        }
+      }
+    </style>
+  </head>
+
+  <template id="report_item">
+    <li id="report_li" class="report_item">
+      <select id="machine_select" class="machine_select">
+      </select>
+      <select id="status_select" class="status_select">
+        <option value="未充電">未充電</option>
+        <option value="充電中">充電中</option>
+        <option value="充電済">充電済</option>
+      </select>
+    </li>
+  </template>
+  <template id="status_item">
+    <li class="status_item">
+      <p id="machine_name" class="d-inline-block"></p>
+      <p id="machine_id" class="d-inline-block"></p>
+      <p id="status_text" class="d-inline-block"></p>
+    </li>
+  </template>
+
+  <body>
+    <!-- loading -->
+    <div id="loading" class="loaded">
+      <div class="loader001"></div>
+    </div>
+
+    <input id="tab_monthly" type="radio" class="tab_btn" name="tab_btn" checked>
+    <input id="tab_weekly" type="radio" class="tab_btn" name="tab_btn">
+
+    <div class="tab_wrap">
+      <label id="label_monthly" class="tab_label" for="tab_monthly"><h5>MONTHLY</h5></label>
+      <label id="label_weekly"class="tab_label" for="tab_weekly"><h5>WEEKLY</h5></label>
+    </div>
+
+    <div class="title_wrap">
+      <div id="title_monthly" class="title">
+        <h1 class="d-inline-block">MONTHLY</h1><p class="d-inline-block">　- 月例点検</p>
+      </div>
+      <div id="title_weekly" class="title">
+        <h1 class="d-inline-block">WEEKLY</h1><p class="d-inline-block">　- 隔週点検</p>
+      </div>
+    </div>
+
+    <div class="description_wrap">
+      <p class="description" style="margin-bottom: 5px;">貸出後にトラブルが発生しないよう、定期的に点検を行う。</p>
+      <p class="description">[状況]から点検状況を確認し、取り行ったものについては[報告]から記録するように。</p>
+    </div>
+
+    <div class="main_wrap">
+      <div class="line_mark_top"></div>
+
+      <div id="main_monthly" class="main">
+        <div class="report">
+          <input id="tag_monthly_report" type="checkbox" class="label_btn">
+          <label id="label_monthly_report" for="tag_monthly_report" class="main_label d-block">
+            <h4 class="label_text">
+              <i class="bi bi-plus-square-fill"></i>
+              <i class="bi bi-dash-square-fill"></i>
+              &nbsp;報告
+            </h4>
+          </label>
+          <div id="contents_monthly_report" class="main_contents">
+            <div>
+              <ul id="monthly_report_container"></ul>
+            </div>
+            <div class="btns">
+              <button onclick="addMonthlyReportItem()"><i class="bi bi-plus-square-fill"></i></button>
+              <button class="btn_show" onclick="getMonthlyResponse()"><i class="bi bi-send"></i>送信</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="status">
+          <input id="tag_monthly_status" type="checkbox" class="label_btn">
+          <label id="label_monthly_status" for="tag_monthly_status" class="main_label d-block">
+            <h4 class="label_text">
+            <i class="bi bi-plus-square-fill"></i>
+            <i class="bi bi-dash-square-fill"></i>
+            &nbsp;状況
+            </h4>
+          </label>
+          <div id="contents_monthly_status" class="main_contents">
+            <div>
+              <ul id="monthly_status_container"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main_weekly" class="main">
+        <div class="report">
+          <input id="tag_weekly_report" type="checkbox" class="label_btn">
+          <label id="label_weekly_report" for="tag_weekly_report" class="main_label d-block">
+            <h4 class="label_text">
+              <i class="bi bi-plus-square-fill"></i>
+              <i class="bi bi-dash-square-fill"></i>
+              &nbsp;報告
+            </h4>
+          </label>
+          <div id="contents_weekly_report" class="main_contents">
+            <div>
+              <ul id="weekly_report_container"></ul>
+            </div>
+            <div class="btns">
+              <button onclick="addWeeklyReportItem()"><i class="bi bi-plus-square-fill"></i></button>
+              <button class="btn_show" onclick="getWeeklyResponse()"><i class="bi bi-send"></i>送信</button>
+            </div>
+          </div>
+        </div>
+          
+        <div class="status">
+          <input id="tag_weekly_status" type="checkbox" class="label_btn">
+          <label id="label_weekly_status" for="tag_weekly_status" class="main_label d-block">
+            <h4 class="label_text">
+            <i class="bi bi-plus-square-fill"></i>
+            <i class="bi bi-dash-square-fill"></i>
+            &nbsp;状況
+            </h4>
+          </label>
+          <div id="contents_weekly_status" class="main_contents">
+            <div>
+              <ul id="weekly_status_container"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-end" style="margin: 10px 20px; font-size: small;">
+        <a href="https://docs.google.com/spreadsheets/d/1Pa9sGHjH321c7OkyPl7pm4mH9fjw1zIxmC6WG4YGvqA/edit#gid=1807868174">設定</a>
+      </div>
+      <div class="line_mark_bottom"></div>
+    </div>
+
+    <script>
+      let MonthlyData = JSON.parse(<?= MonthlyData ?>);
+      let WeeklyData = JSON.parse(<?= WeeklyData ?>);
+
+      function addMonthlyReportItem(){
+        const template = document.getElementById('report_item');
+        const clone = template.content.cloneNode(true);
+        let elem
+        for (let i=0; i<Object.keys(MonthlyData).length; i++){
+          elem = document.createElement('option');
+          elem.value = i;
+          elem.textContent = MonthlyData[i].machine + ' ' + MonthlyData[i].id;
+          clone.getElementById('machine_select').appendChild(elem);
+        }
+        clone.getElementById('report_li').classList.add('monthly_selector');
+        const num_selector = document.getElementsByClassName('monthly_selector').length;
+        clone.getElementById('machine_select').setAttribute('id', 'machine_select_' + num_selector);
+        clone.getElementById('status_select').setAttribute('id', 'status_select_' + num_selector);
+        document.getElementById('monthly_report_container').appendChild(clone);
+      }
+      function addWeeklyReportItem(){
+        const template = document.getElementById('report_item');
+        const clone = template.content.cloneNode(true);
+        let elem
+        for (var i=0; i<Object.keys(WeeklyData).length; i++){
+          elem = document.createElement('option');
+          elem.value = i;
+          elem.textContent = WeeklyData[i].machine + ' ' + WeeklyData[i].id;
+          clone.getElementById('machine_select').appendChild(elem);
+        }
+        clone.getElementById('report_li').classList.add('weekly_selector');
+        const num_selector = document.getElementsByClassName('weekly_selector').length;
+        clone.getElementById('machine_select').setAttribute('id', 'machine_select_' + num_selector);
+        clone.getElementById('status_select').setAttribute('id', 'status_select_' + num_selector);
+        document.getElementById('weekly_report_container').appendChild(clone);
+      }
+
+      function addMonthlyStatusItem(data){
+        const template = document.getElementById('status_item');
+        const clone = template.content.cloneNode(true);
+        clone.getElementById('machine_name').textContent = data.machine;
+        clone.getElementById('machine_id').textContent = data.id;
+        clone.getElementById('status_text').textContent = data.status;
+        document.getElementById('monthly_status_container').appendChild(clone);
+      }
+      for (var i=0; i<Object.keys(MonthlyData).length; i++){
+        addMonthlyStatusItem(MonthlyData[i]);
+      }
+      function addWeeklyStatusItem(data){
+        const template = document.getElementById('status_item');
+        const clone = template.content.cloneNode(true);
+        clone.getElementById('machine_name').textContent = data.machine;
+        clone.getElementById('machine_id').textContent = data.id;
+        clone.getElementById('status_text').textContent = data.status;
+        document.getElementById('weekly_status_container').appendChild(clone);
+      }
+      for (var i=0; i<Object.keys(WeeklyData).length; i++){
+        addWeeklyStatusItem(WeeklyData[i]);
+      }
+
+      function getMonthlyResponse(){
+        document.getElementById('loading').classList.remove('loaded');
+        const now_time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' })
+        const elems = document.getElementsByClassName('monthly_selector');
+        let index
+        let status
+        Array.from(elems).forEach(
+          function(elem){
+            index = elem.getElementsByClassName('machine_select')[0].value;
+            status = elem.getElementsByClassName('status_select')[0].value;
+            MonthlyData[index].status = status;
+            MonthlyData[index].timestump = now_time;
+            MonthlyData[index].isChange = true;
+          }
+        );
+        google.script.run.withSuccessHandler(function(data){
+          document.getElementById('monthly_report_container').innerHTML = '';
+          document.getElementById('monthly_status_container').innerHTML = '';
+          for (var i=0; i<Object.keys(MonthlyData).length; i++){
+            addMonthlyStatusItem(MonthlyData[i]);
+          }
+          document.getElementById('loading').classList.add('loaded');
+        }).setMonthlyStatus(JSON.stringify(MonthlyData));
+      }
+      function getWeeklyResponse(){
+        document.getElementById('loading').classList.remove('loaded');
+        const now_time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' })
+        const elems = document.getElementsByClassName('weekly_selector');
+        let index
+        let status
+        Array.from(elems).forEach(
+          function(elem){
+            index = elem.getElementsByClassName('machine_select')[0].value;
+            status = elem.getElementsByClassName('status_select')[0].value;
+            WeeklyData[index].status = status;
+            WeeklyData[index].timestump = now_time;
+            WeeklyData[index].isChange = true;
+          }
+        );
+        google.script.run.withSuccessHandler(function(data){
+          document.getElementById('weekly_report_container').innerHTML = '';
+          document.getElementById('weekly_status_container').innerHTML = '';
+          for (var i=0; i<Object.keys(WeeklyData).length; i++){
+            addWeeklyStatusItem(WeeklyData[i]);
+          }
+          document.getElementById('loading').classList.add('loaded');
+        }).setWeeklyStatus(JSON.stringify(WeeklyData));
+      }
+    </script>
+  </body>
+</html>
