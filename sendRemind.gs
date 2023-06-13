@@ -1,25 +1,33 @@
 function 毎時実行(){
+  let message = Utilities.formatDate(now, 'JST', 'MM-dd HH:mm') + '\n点検ツールから毎時実行関数が定期実行されたよ！'
+  message += '\n営業中判定は、' + String(営業日カレンダー[Utilities.formatDate(now, 'JST', 'yyyy-MM-dd')].status == '営業' && 9 <= now.getHours() && now.getHours() < 17)
+
   //　営業日かつ営業時間内のみ
   if (営業日カレンダー[Utilities.formatDate(now, 'JST', 'yyyy-MM-dd')].status == '営業' && 9 <= now.getHours() && now.getHours() < 17){
 
     // 毎日実行
     const メンテナンス時刻 = Number(設定データ[設定データ.indexOf('メンテナンス時刻')+1]);
+    message += '\nメンテナンス時刻判定は、' + String(メンテナンス時刻 == now.getHours())
     if (メンテナンス時刻 == now.getHours()){
 
       // 月例点検
       const 先月実施日 = new Date(スクリプトプロパティ.getProperty('月例点検実施日'));
+      message += '\n月例点検判定は、' + String(先月実施日.getMonth() < now.getMonth())
       if (先月実施日.getMonth() < now.getMonth()){
         sendMonthlyRemind()
       }
 
       // 隔週点検
       const 前回実施日 = new Date(スクリプトプロパティ.getProperty('隔週点検実施日'));
-      const 間隔 = Number(設定データ[設定データ.indexOf('隔週間隔（日数）')+1]);
+      const 間隔 = Number(設定データ[設定データ.indexOf('隔週の間隔')+1]);
+      message += '\n隔週点検判定は、' + String(前回実施日.setDate(前回実施日.getDate() + 間隔) <= now)
       if (前回実施日.setDate(前回実施日.getDate() + 間隔) <= now){
         sendWeeklyRemind()
       }
     }
   }
+
+  SlackApp.create(SlackBotトークン).postMessage('UCW6C8292', message);
 }
 
 function sendMonthlyRemind(){

@@ -53,7 +53,7 @@ const 営業日カレンダー = カレンダーデータ.reduce(
     }, {}
 )
 
-const SlackBotトークン = 設定データ[設定データ.indexOf('SlackBotトークン')+1];
+const SlackBotトークン = スクリプトプロパティ.getProperty('SlackBotトークン');
 const 投稿チャンネルID = 設定データ[設定データ.indexOf('投稿チャンネルID')+1];
 
 const アプリURL = 設定データ[設定データ.indexOf('webアプリURL')+1];
