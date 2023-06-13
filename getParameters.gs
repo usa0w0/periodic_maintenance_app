@@ -35,7 +35,7 @@ const 週別DBシート一覧 = 週別DBスプレッドシート.getSheets();
 const 該当週シート = 週別DBシート一覧[0];
 
 const 営業日カレンダーURL = 設定データ[設定データ.indexOf('営業日カレンダーURL')+1];
-const now = new Date();
+let now = new Date();
 let 今年度シート名 = String(now.getFullYear());
 if (now.getMonth() < 3){
   今年度シート名 = String(now.getFullYear() - 1);
