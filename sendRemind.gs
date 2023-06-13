@@ -38,7 +38,7 @@ function sendMonthlyRemind(){
   const 通知メッセージ = '<!channel>\n' + 月例通知文 + '\n<'+ アプリURL +'|点検ツール>';
   const option = {username: 月例通知ボット名}
   slackApp = SlackApp.create(SlackBotトークン);
-  slackApp.postMessage(投稿チャンネルID, 通知メッセージ, option);
+  slackApp.postMessage(通知チャンネルID, 通知メッセージ, option);
 
   スクリプトプロパティ.setProperty('月例点検実施日', now);
 }
@@ -51,7 +51,7 @@ function sendWeeklyRemind(){
   const 通知メッセージ = '<!channel>\n' + 隔週通知文 + '\n<'+ アプリURL +'|点検ツール>';
   const option = {username: 隔週通知ボット名}
   slackApp = SlackApp.create(SlackBotトークン);
-  slackApp.postMessage(投稿チャンネルID, 通知メッセージ, option);
+  slackApp.postMessage(通知チャンネルID, 通知メッセージ, option);
 
   スクリプトプロパティ.setProperty('隔週点検実施日', now);
 }

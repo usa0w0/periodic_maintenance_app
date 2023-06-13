@@ -54,7 +54,7 @@ const 営業日カレンダー = カレンダーデータ.reduce(
 )
 
 const SlackBotトークン = スクリプトプロパティ.getProperty('SlackBotトークン');
-const 投稿チャンネルID = 設定データ[設定データ.indexOf('投稿チャンネルID')+1];
+const 通知チャンネルID = 設定データ[設定データ.indexOf('通知チャンネルID')+1];
 
 const アプリURL = 設定データ[設定データ.indexOf('webアプリURL')+1];
 
