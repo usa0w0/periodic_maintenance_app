@@ -14,9 +14,15 @@ function 毎時実行(){
 
       // 隔週点検
       const 前回実施日 = new Date(スクリプトプロパティ.getProperty('隔週点検実施日'));
-      const 間隔 = Number(設定データ[設定データ.indexOf('隔週の間隔')+1]);
+      const 間隔 = Number(設定データ[設定データ.indexOf('隔週実施の間隔')+1]);
       if (前回実施日.setDate(前回実施日.getDate() + 間隔) <= now){
         sendWeeklyRemind()
+      }
+
+      const 前回PC点検日 = new Date(スクリプトプロパティ.getProperty('PC点検実施日'));
+      const PC点検間隔 = Number(設定データ[設定データ.indexOf('PC点検間隔')+1]);
+      if (前回PC点検日.setDate(前回PC点検日.getDate() + PC点検間隔) <= now){
+        sendPCRemind()
       }
     }
 
@@ -49,6 +55,19 @@ function sendWeeklyRemind(){
   slackApp.postMessage(通知チャンネルID, 通知メッセージ, option);
 
   スクリプトプロパティ.setProperty('隔週点検実施日', now);
+}
+
+function sendPCRemind(){
+  const PC検表テンプレ = システムコンテナスプレッドシート.getSheetByName('PC点検表');
+  const 新規PC点検表 = PC点検表テンプレ.copyTo(PC点検DBスプレッドシート);
+  新規PC点検表.setName(Utilities.formatDate(now, 'JST', 'yyyy-MM-dd'))
+
+  const 通知メッセージ = '<!channel>\n' + PC通知文 + '\n<'+ アプリURL +'|点検ツール>';
+  const option = {username: PC通知ボット名}
+  slackApp = SlackApp.create(SlackBotトークン);
+  slackApp.postMessage(通知チャンネルID, 通知メッセージ, option);
+
+  スクリプトプロパティ.setProperty('PC点検実施日', now);
 }
 
 function sendProgressRemind(){

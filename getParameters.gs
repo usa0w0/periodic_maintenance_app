@@ -58,6 +58,21 @@ const 週別DBシート一覧 = 週別DBスプレッドシート.getSheets();
 })
 const 該当週シート = 週別DBシート一覧[0];
 
+const PC点検データベースURL = 設定データ[設定データ.indexOf('PC点検データベースURL')+1];
+const PC点検DBスプレッドシート = SpreadsheetApp.openByUrl(PC点検データベースURL);
+const PC点検DBシート一覧 = PC点検DBスプレッドシート.getSheets();
+// シート名でソート（最新のものが前に）
+PC点検DBシート一覧.sort((a, b) => {
+  const nameA = a.getSheetName();
+  const nameB = b.getSheetName();
+  if (nameA < nameB) {
+    return 1;
+  } else {
+    return -1;
+  }
+})
+const 該当PC点検シート = PC点検DBシート一覧[0];
+
 const 営業日カレンダーURL = 設定データ[設定データ.indexOf('営業日カレンダーURL')+1];
 let now = new Date();
 let 今年度シート名 = String(now.getFullYear());
@@ -87,6 +102,9 @@ const 月例通知文 = 設定データ[設定データ.indexOf('月例点検通
 
 const 隔週通知ボット名 = 設定データ[設定データ.indexOf('隔週通知ボット名')+1];
 const 隔週通知文 = 設定データ[設定データ.indexOf('隔週点検通知')+1];
+
+const PC通知ボット名 = 設定データ[設定データ.indexOf('PC通知ボット名')+1];
+const PC通知文 = 設定データ[設定データ.indexOf('PC点検通知')+1];
 
 function test(){
   return

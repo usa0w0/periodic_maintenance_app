@@ -37,9 +37,9 @@
       }
       .tab_label {
         height: 30px;
-        width: 40vw;
+        width: 27vw;
         margin-bottom: 5px;
-        padding-left: 10px;
+        padding-left: 5px;
         letter-spacing: 0.1em;
         background: #B4AE9A;
         color: #4D4B43;
@@ -56,6 +56,12 @@
         background: #4D4B43;
         color:#DAD4BB;
       }
+      #tab_pc:checked ~ .tab_wrap #label_pc {
+        height: 45px;
+        margin-bottom: 0px;
+        background: #4D4B43;
+        color:#DAD4BB;
+      }
 
       .title_wrap {
         margin: 20px 25px;
@@ -66,6 +72,7 @@
       }
       #tab_monthly:checked ~ .title_wrap #title_monthly {display: block;}
       #tab_weekly:checked ~ .title_wrap #title_weekly {display: block;}
+      #tab_pc:checked ~ .title_wrap #title_pc {display: block;}
 
       .description_wrap {
         margin: 20px;
@@ -101,6 +108,7 @@
       }
       #tab_monthly:checked ~ .main_wrap #main_monthly {display: block;}
       #tab_weekly:checked ~ .main_wrap #main_weekly {display: block;}
+      #tab_pc:checked ~ .main_wrap #main_pc {display: block;}
 
       input[type="checkbox"]{
         display: none;
@@ -129,6 +137,14 @@
         color: #DAD4BB;
         background: #4D4B43;
       }
+      #tag_pc_report:checked ~ #label_pc_report{
+        color: #DAD4BB;
+        background: #4D4B43;
+      }
+      #tag_pc_status:checked ~ #label_pc_status{
+        color: #DAD4BB;
+        background: #4D4B43;
+      }
 
       .label_text .bi-dash-square-fill {display: none;}
       #tag_monthly_report:checked ~ #label_monthly_report .label_text .bi-plus-square-fill{display: none;}
@@ -139,6 +155,10 @@
       #tag_weekly_report:checked ~ #label_weekly_report .label_text .bi-dash-square-fill{display: inline-block;}
       #tag_weekly_status:checked ~ #label_weekly_status .label_text .bi-plus-square-fill{display: none;}
       #tag_weekly_status:checked ~ #label_weekly_status .label_text .bi-dash-square-fill{display: inline-block;}
+      #tag_pc_report:checked ~ #label_pc_report .label_text .bi-plus-square-fill{display: none;}
+      #tag_pc_report:checked ~ #label_pc_report .label_text .bi-dash-square-fill{display: inline-block;}
+      #tag_pc_status:checked ~ #label_pc_status .label_text .bi-plus-square-fill{display: none;}
+      #tag_pc_status:checked ~ #label_pc_status .label_text .bi-dash-square-fill{display: inline-block;}
 
       .main_contents {
         display: none;
@@ -147,6 +167,8 @@
       #tag_monthly_status:checked ~ #contents_monthly_status {display: block;}
       #tag_weekly_report:checked ~ #contents_weekly_report {display: block;}
       #tag_weekly_status:checked ~ #contents_weekly_status {display: block;}
+      #tag_pc_report:checked ~ #contents_pc_report {display: block;}
+      #tag_pc_status:checked ~ #contents_pc_status {display: block;}
 
       .report_item {
         list-style-type: square;
@@ -302,10 +324,12 @@
 
     <input id="tab_monthly" type="radio" class="tab_btn" name="tab_btn" checked>
     <input id="tab_weekly" type="radio" class="tab_btn" name="tab_btn">
+    <input id="tab_pc" type="radio" class="tab_btn" name="tab_btn">
 
     <header class="tab_wrap">
       <label id="label_monthly" class="tab_label" for="tab_monthly"><h5>MONTHLY</h5></label>
       <label id="label_weekly"class="tab_label" for="tab_weekly"><h5>WEEKLY</h5></label>
+      <label id="label_pc"class="tab_label" for="tab_pc"><h5>COMPUTER</h5></label>
     </header>
 
     <div class="title_wrap">
@@ -314,6 +338,9 @@
       </div>
       <div id="title_weekly" class="title">
         <h1 class="d-inline-block">WEEKLY</h1><p class="d-inline-block">　- 隔週点検</p>
+      </div>
+      <div id="title_pc" class="title">
+        <h1 class="d-inline-block">COMPUTER</h1><p class="d-inline-block">　- 貸出PC</p>
       </div>
     </div>
 
@@ -400,6 +427,45 @@
           </div>
         </div>
       </div>
+
+      <div id="main_pc" class="main">
+        <div class="report">
+          <input id="tag_pc_report" type="checkbox" class="label_btn">
+          <label id="label_pc_report" for="tag_pc_report" class="main_label d-block">
+            <h4 class="label_text">
+              <i class="bi bi-plus-square-fill"></i>
+              <i class="bi bi-dash-square-fill"></i>
+              &nbsp;報告
+            </h4>
+          </label>
+          <div id="contents_pc_report" class="main_contents">
+            <div>
+              <ul id="pc_report_container"></ul>
+            </div>
+            <div class="btns">
+              <button onclick="addPCReportItem()"><i class="bi bi-plus-square-fill"></i></button>
+              <button class="btn_show" onclick="getPCResponse()"><i class="bi bi-send"></i>送信</button>
+            </div>
+          </div>
+        </div>
+          
+        <div class="status">
+          <input id="tag_pc_status" type="checkbox" class="label_btn">
+          <label id="label_pc_status" for="tag_pc_status" class="main_label d-block">
+            <h4 class="label_text">
+            <i class="bi bi-plus-square-fill"></i>
+            <i class="bi bi-dash-square-fill"></i>
+            &nbsp;状況
+            </h4>
+          </label>
+          <div id="contents_pc_status" class="main_contents">
+            <div>
+              <ul id="pc_status_container"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="text-end" style="margin: 10px 20px; font-size: small;">
         <a href="https://docs.google.com/spreadsheets/d/1Pa9sGHjH321c7OkyPl7pm4mH9fjw1zIxmC6WG4YGvqA/edit#gid=1807868174"><i class="bi bi-file-earmark-spreadsheet"></i>設定</a>
         <i class="bi bi-person-bounding-box" style="padding-left: 15px; padding-right: 1px;"></i><p id="user" class="d-inline-block" style="margin: 0px;"></p>
@@ -410,6 +476,7 @@
     <script>
       let MonthlyData = JSON.parse(<?= MonthlyData ?>);
       let WeeklyData = JSON.parse(<?= WeeklyData ?>);
+      let PCData = JSON.parse(<?= PCData ?>);
       let user = JSON.parse(<?= user ?>)
       document.getElementById('user').appendChild(document.createTextNode(user['氏名']));
 
@@ -445,8 +512,25 @@
         clone.getElementById('status_select').setAttribute('id', 'status_select_' + num_selector);
         document.getElementById('weekly_report_container').appendChild(clone);
       }
+      function addPCReportItem(){
+        const template = document.getElementById('report_item');
+        const clone = template.content.cloneNode(true);
+        let elem
+        for (var i=0; i<Object.keys(PCData).length; i++){
+          elem = document.createElement('option');
+          elem.value = i;
+          elem.textContent = PCData[i].machine + ' ' + PCData[i].id;
+          clone.getElementById('machine_select').appendChild(elem);
+        }
+        clone.getElementById('report_li').classList.add('pc_selector');
+        const num_selector = document.getElementsByClassName('pc_selector').length;
+        clone.getElementById('machine_select').setAttribute('id', 'machine_select_' + num_selector);
+        clone.getElementById('status_select').setAttribute('id', 'status_select_' + num_selector);
+        document.getElementById('pc_report_container').appendChild(clone);
+      }
       addMonthlyReportItem()
       addWeeklyReportItem()
+      addPCReportItem()
 
       function addMonthlyStatusItem(data){
         const template = document.getElementById('status_item');
@@ -489,6 +573,27 @@
       }
       for (var i=0; i<Object.keys(WeeklyData).length; i++){
         addWeeklyStatusItem(WeeklyData[i]);
+      }
+      function addPCStatusItem(data){
+        const template = document.getElementById('status_item');
+        const clone = template.content.cloneNode(true);
+        clone.getElementById('machine_name').textContent = data.machine;
+        clone.getElementById('machine_id').textContent = data.id;
+        switch (data.status){
+          case '未充電':
+            clone.getElementById('status_not').style.display = 'inline-block';
+            break
+          case '充電中':
+            clone.getElementById('status_ing').style.display = 'inline-block';
+            break
+          case '充電済':
+            clone.getElementById('status_ed').style.display = 'inline-block';
+            break
+        }
+        document.getElementById('pc_status_container').appendChild(clone);
+      }
+      for (var i=0; i<Object.keys(PCData).length; i++){
+        addPCStatusItem(PCData[i]);
       }
 
       function getMonthlyResponse(){
@@ -544,6 +649,33 @@
           }
           document.getElementById('loading').classList.add('loaded');
         }).setWeeklyStatus(JSON.stringify(WeeklyData));
+      }
+      function getPCResponse(){
+        document.getElementById('loading').classList.remove('loaded');
+        const now_time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' })
+        const elems = document.getElementsByClassName('pc_selector');
+        let index
+        let status
+        Array.from(elems).forEach(
+          function(elem){
+            index = elem.getElementsByClassName('machine_select')[0].value;
+            status = elem.getElementsByClassName('status_select')[0].value;
+            if (PCData[index].status != status){
+              PCData[index].status = status;
+              PCData[index].timestump = now_time;
+              PCData[index].isChange = true;
+            }
+          }
+        );
+        google.script.run.withSuccessHandler(function(data){
+          document.getElementById('pc_report_container').innerHTML = '';
+          addPCReportItem()
+          document.getElementById('pc_status_container').innerHTML = '';
+          for (var i=0; i<Object.keys(PCData).length; i++){
+            addPCStatusItem(PCData[i]);
+          }
+          document.getElementById('loading').classList.add('loaded');
+        }).setPCStatus(JSON.stringify(PCData));
       }
     </script>
   </body>
