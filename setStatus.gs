@@ -16,6 +16,7 @@ function setMonthlyStatus(MonthlyData) {
       if (MonthlyData[String(i)].status == '充電中'){
         充電中リスト.push({
           date: MonthlyData[String(i)].timestump,
+          machine: MonthlyData[String(i)].machine,
           id: MonthlyData[String(i)].id,
         })
       }
@@ -42,6 +43,7 @@ function setWeeklyStatus(WeeklyData) {
       if (WeeklyData[String(i)].status == '充電中'){
         充電中リスト.push({
           date: WeeklyData[String(i)].timestump,
+          machine: WeeklyData[String(i)].machine,
           id: WeeklyData[String(i)].id,
         })
       }

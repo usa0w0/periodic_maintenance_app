@@ -62,25 +62,31 @@ function sendWeeklyRemind(){
 function sendProgressRemind(){
   const 経過時間 = Number(設定データ[設定データ.indexOf('経過時間リマインド')+1]);
 
-  let 通知メッセージ = '';
+  let 通知メッセージ = '↓充電が済んだ機器';
   const option = {username: '充電開始から '+経過時間+' 時間以上が経過した機器があります！'}
   
   let 充電中リスト = JSON.parse(スクリプトプロパティ.getProperty('充電中'));
   let 充電開始時間
 
-  console.log(充電中リスト)
+  let 通知済みリスト = []
 
   充電中リスト.forEach(function(機器情報){
     充電開始時間 = new Date(機器情報.date);
     if (充電開始時間.setHours(充電開始時間.getHours() + 経過時間) <= now){
-      通知メッセージ += '・'+機器情報.id;
-      充電中リスト.splice(充電中リスト.indexOf(機器情報), 充電中リスト.indexOf(機器情報)+1);
+      通知メッセージ += '\n・'+機器情報.machine+' '+機器情報.id;
+      通知済みリスト.push(充電中リスト.indexOf(機器情報))
     }
   })
 
-  if (通知メッセージ == ''){
+  // 通知するものがなかった場合→終了
+  if (!通知済みリスト.length){
     return
   }
+
+  // 通知済みのものを充電中リストから削除
+  通知済みリスト.sort((a,b) => (a > b ? -1 : 1)).forEach(
+    x => 充電中リスト.splice(x, x+1)
+  )
 
   通知メッセージ += '\n<'+ アプリURL +'|点検ツール>';
   slackApp = SlackApp.create(SlackBotトークン);
