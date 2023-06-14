@@ -5,11 +5,12 @@ const システムコンテナスプレッドシート = SpreadsheetApp.openById
 const 設定データ = システムコンテナスプレッドシート.getSheetByName('CONFIG').getDataRange().getValues().flat();
 
 const ログインユーザーアドレス = Session.getActiveUser().getEmail();
+const メールアドレスラベル = 設定データ[設定データ.indexOf('メールアドレス列のラベル')+1];
 const 名簿URL = 設定データ[設定データ.indexOf('名簿URL')+1];
 const 名簿スプレッドシート = SpreadsheetApp.openByUrl(名簿URL);
 const 名簿ラベル = 名簿スプレッドシート.getSheetByName('now').getDataRange().getValues()[0];
 const 名簿データ = 名簿スプレッドシート.getSheetByName('now').getDataRange().getValues().slice(1);
-const ログインユーザー情報 = 名簿データ.filter(data => data[名簿ラベル.indexOf('ima.aim.aoyama.ac.jp')] == ログインユーザーアドレス);
+const ログインユーザー情報 = 名簿データ.filter(data => data[名簿ラベル.indexOf(メールアドレスラベル)] == ログインユーザーアドレス);
 let ログインユーザー
 // ログインユーザー情報から、名簿ラベルの値をkeyにした
 if (ログインユーザー情報.length){
