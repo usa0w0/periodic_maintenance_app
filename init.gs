@@ -1,6 +1,5 @@
-const ui = SpreadsheetApp.getUi(); // Same variations.
-
 function onOpen(){
+  const ui = SpreadsheetApp.getUi();
   ui.createMenu('追加機能')
     .addItem('セットアップ', 'init')
     .addSeparator()
@@ -13,6 +12,8 @@ function onOpen(){
 }
 
 function init(){
+  const ui = SpreadsheetApp.getUi();
+
   // プロンプトダイアログを表示
   if (トークン入力() == '終了'){
     return
@@ -29,6 +30,8 @@ function init(){
 }
 
 function トークン入力(){
+  const ui = SpreadsheetApp.getUi();
+  
   // トークン入力
   const トークン入力プロンプト = ui.prompt(
     '初期設定 1/n',
@@ -51,6 +54,8 @@ function トークン入力(){
 }
 
 function 通知テスト(){
+  const ui = SpreadsheetApp.getUi();
+
   // 通知テスト
   const 通知テストプロンプト = ui.alert(
     '初期設定 2/n',
@@ -87,6 +92,8 @@ function 通知テスト(){
 }
 
 function 点検データベース作成(){
+  const ui = SpreadsheetApp.getUi();
+  
   // DB作成プロンプト
   const DB作成プロンプト = ui.alert(
     '初期設定 3/n',
