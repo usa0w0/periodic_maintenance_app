@@ -604,17 +604,28 @@
         const elems = document.getElementsByClassName('monthly_selector');
         let index
         let status
+        let confirm_message = ''
         Array.from(elems).forEach(
           function(elem){
             index = elem.getElementsByClassName('machine_select')[0].value;
             status = elem.getElementsByClassName('status_select')[0].value;
             if (MonthlyData[index].status != status){
+              confirm_message += MonthlyData[index].machine+' '+MonthlyData[index].id+' : '+status+'\n';
               MonthlyData[index].status = status;
               MonthlyData[index].timestump = now_time;
               MonthlyData[index].isChange = true;
             }
           }
         );
+        if (!confirm_message){
+          document.getElementById('loading').classList.add('loaded');
+          window.alert('ステータスに変更がありません。\n送信しませんでした。');
+          return
+        } else if (!window.confirm('【確認メッセージ】\n'+confirm_message + 'を送信します。')){
+          document.getElementById('loading').classList.add('loaded');
+          window.alert('送信しませんでした。');
+          return
+        }
         google.script.run.withSuccessHandler(function(data){
           document.getElementById('monthly_report_container').innerHTML = '';
           addMonthlyReportItem()
@@ -631,17 +642,28 @@
         const elems = document.getElementsByClassName('weekly_selector');
         let index
         let status
+        let confirm_message = '';
         Array.from(elems).forEach(
           function(elem){
             index = elem.getElementsByClassName('machine_select')[0].value;
             status = elem.getElementsByClassName('status_select')[0].value;
             if (WeeklyData[index].status != status){
+              confirm_message += WeeklyData[index].machine+' '+WeeklyData[index].id+' : '+status+'\n';
               WeeklyData[index].status = status;
               WeeklyData[index].timestump = now_time;
               WeeklyData[index].isChange = true;
             }
           }
         );
+        if (!confirm_message){
+          document.getElementById('loading').classList.add('loaded');
+          window.alert('ステータスに変更がありません。\n送信しませんでした。');
+          return
+        } else if (!window.confirm('【確認メッセージ】\n'+confirm_message + 'を送信します。')){
+          document.getElementById('loading').classList.add('loaded');
+          window.alert('送信しませんでした。');
+          return
+        }
         google.script.run.withSuccessHandler(function(data){
           document.getElementById('weekly_report_container').innerHTML = '';
           addWeeklyReportItem()
@@ -658,17 +680,28 @@
         const elems = document.getElementsByClassName('pc_selector');
         let index
         let status
+        let confirm_message = ''
         Array.from(elems).forEach(
           function(elem){
             index = elem.getElementsByClassName('machine_select')[0].value;
             status = elem.getElementsByClassName('status_select')[0].value;
             if (PCData[index].status != status){
+              confirm_message += PCData[index].machine+' '+PCData[index].id+' : '+status+'\n';
               PCData[index].status = status;
               PCData[index].timestump = now_time;
               PCData[index].isChange = true;
             }
           }
         );
+        if (!confirm_message){
+          document.getElementById('loading').classList.add('loaded');
+          window.alert('ステータスに変更がありません。\n送信しませんでした。');
+          return
+        } else if (!window.confirm('【確認メッセージ】\n'+confirm_message + 'を送信します。')){
+          document.getElementById('loading').classList.add('loaded');
+          window.alert('送信しませんでした。');
+          return
+        }
         google.script.run.withSuccessHandler(function(data){
           document.getElementById('pc_report_container').innerHTML = '';
           addPCReportItem()
