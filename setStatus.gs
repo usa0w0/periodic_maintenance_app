@@ -11,6 +11,7 @@ function setMonthlyStatus(MonthlyData) {
     if (MonthlyData[String(i)].isChange){
       該当月シート.getRange(i+2, label.indexOf('ステータス')+1).setValue(MonthlyData[String(i)].status);
       該当月シート.getRange(i+2, label.indexOf('タイムスタンプ')+1).setValue(MonthlyData[String(i)].timestump);
+      該当月シート.getRange(i+2, label.indexOf('実施者')+1).setValue(ログインユーザー['氏名']);
 
       // ステータス→充電中の場合、記録
       if (MonthlyData[String(i)].status == '充電中'){
@@ -38,6 +39,7 @@ function setWeeklyStatus(WeeklyData) {
     if (WeeklyData[String(i)].isChange){
       該当週シート.getRange(i+2, label.indexOf('ステータス')+1).setValue(WeeklyData[String(i)].status);
       該当週シート.getRange(i+2, label.indexOf('タイムスタンプ')+1).setValue(WeeklyData[String(i)].timestump);
+      該当週シート.getRange(i+2, label.indexOf('実施者')+1).setValue(ログインユーザー['氏名']);
 
       // ステータス→充電中の場合、記録
       if (WeeklyData[String(i)].status == '充電中'){
@@ -56,15 +58,16 @@ function setWeeklyStatus(WeeklyData) {
 function setPCStatus(PCData) {
   PCData = JSON.parse(PCData);
 
-  const label = 該当週シート.getDataRange().getValues()[0];
-  const 機器数 = 該当週シート.getLastRow()-1;
+  const label = 該当PC点検シート.getDataRange().getValues()[0];
+  const 機器数 = 該当PC点検シート.getLastRow()-1;
 
   let 充電中リスト = JSON.parse(スクリプトプロパティ.getProperty('充電中'));
 
   for (let i=0; i<機器数; i++){
     if (PCData[String(i)].isChange){
-      該当週シート.getRange(i+2, label.indexOf('ステータス')+1).setValue(PCData[String(i)].status);
-      該当週シート.getRange(i+2, label.indexOf('タイムスタンプ')+1).setValue(PCData[String(i)].timestump);
+      該当PC点検シート.getRange(i+2, label.indexOf('ステータス')+1).setValue(PCData[String(i)].status);
+      該当PC点検シート.getRange(i+2, label.indexOf('タイムスタンプ')+1).setValue(PCData[String(i)].timestump);
+      該当PC点検シート.getRange(i+2, label.indexOf('実施者')+1).setValue(ログインユーザー['氏名']);
 
       // ステータス→充電中の場合、記録
       if (PCData[String(i)].status == '充電中'){
