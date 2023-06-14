@@ -1,6 +1,10 @@
 const スクリプトプロパティ = PropertiesService.getScriptProperties();
 
-const システムコンテナID = '1Pa9sGHjH321c7OkyPl7pm4mH9fjw1zIxmC6WG4YGvqA';
+let システムコンテナID = スクリプトプロパティ.getProperty('システムコンテナID');
+if (!システムコンテナID){
+  システムコンテナID = SpreadsheetApp.getActiveSpreadsheet().getId();
+  スクリプトプロパティ.setProperty('システムコンテナID', システムコンテナID);
+}
 const システムコンテナスプレッドシート = SpreadsheetApp.openById(システムコンテナID);
 const 設定データ = システムコンテナスプレッドシート.getSheetByName('CONFIG').getDataRange().getValues().flat();
 
@@ -30,7 +34,7 @@ if (ログインユーザー情報.length){
 }
 
 const 月別データベースURL = 設定データ[設定データ.indexOf('月別データベースURL')+1];
-const 月別DBスプレッドシート = SpreadsheetApp.openByUrl(月別データベースURL);
+let 月別DBスプレッドシート = SpreadsheetApp.openByUrl(月別データベースURL);
 const 月別DBシート一覧 = 月別DBスプレッドシート.getSheets();
 // シート名でソート（最新のものが前に）
 月別DBシート一覧.sort((a, b) => {
@@ -45,7 +49,7 @@ const 月別DBシート一覧 = 月別DBスプレッドシート.getSheets();
 const 該当月シート = 月別DBシート一覧[0];
 
 const 週別データベースURL = 設定データ[設定データ.indexOf('週別データベースURL')+1];
-const 週別DBスプレッドシート = SpreadsheetApp.openByUrl(週別データベースURL);
+let 週別DBスプレッドシート = SpreadsheetApp.openByUrl(週別データベースURL);
 const 週別DBシート一覧 = 週別DBスプレッドシート.getSheets();
 // シート名でソート（最新のものが前に）
 週別DBシート一覧.sort((a, b) => {
@@ -60,7 +64,7 @@ const 週別DBシート一覧 = 週別DBスプレッドシート.getSheets();
 const 該当週シート = 週別DBシート一覧[0];
 
 const PC点検データベースURL = 設定データ[設定データ.indexOf('PC点検データベースURL')+1];
-const PC点検DBスプレッドシート = SpreadsheetApp.openByUrl(PC点検データベースURL);
+let PC点検DBスプレッドシート = SpreadsheetApp.openByUrl(PC点検データベースURL);
 const PC点検DBシート一覧 = PC点検DBスプレッドシート.getSheets();
 // シート名でソート（最新のものが前に）
 PC点検DBシート一覧.sort((a, b) => {
