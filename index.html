@@ -303,10 +303,10 @@
     <input id="tab_monthly" type="radio" class="tab_btn" name="tab_btn" checked>
     <input id="tab_weekly" type="radio" class="tab_btn" name="tab_btn">
 
-    <div class="tab_wrap">
+    <header class="tab_wrap">
       <label id="label_monthly" class="tab_label" for="tab_monthly"><h5>MONTHLY</h5></label>
       <label id="label_weekly"class="tab_label" for="tab_weekly"><h5>WEEKLY</h5></label>
-    </div>
+    </header>
 
     <div class="title_wrap">
       <div id="title_monthly" class="title">
@@ -401,7 +401,8 @@
         </div>
       </div>
       <div class="text-end" style="margin: 10px 20px; font-size: small;">
-        <a href="https://docs.google.com/spreadsheets/d/1Pa9sGHjH321c7OkyPl7pm4mH9fjw1zIxmC6WG4YGvqA/edit#gid=1807868174">設定</a>
+        <a href="https://docs.google.com/spreadsheets/d/1Pa9sGHjH321c7OkyPl7pm4mH9fjw1zIxmC6WG4YGvqA/edit#gid=1807868174"><i class="bi bi-file-earmark-spreadsheet"></i>設定</a>
+        <i class="bi bi-person-bounding-box" style="padding-left: 15px; padding-right: 1px;"></i><p id="user" class="d-inline-block" style="margin: 0px;"></p>
       </div>
       <div class="line_mark_bottom"></div>
     </div>
@@ -409,6 +410,8 @@
     <script>
       let MonthlyData = JSON.parse(<?= MonthlyData ?>);
       let WeeklyData = JSON.parse(<?= WeeklyData ?>);
+      let user = JSON.parse(<?= user ?>)
+      document.getElementById('user').appendChild(document.createTextNode(user['氏名']));
 
       function addMonthlyReportItem(){
         const template = document.getElementById('report_item');
