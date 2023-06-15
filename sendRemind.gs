@@ -58,7 +58,7 @@ function sendWeeklyRemind(){
 }
 
 function sendPCRemind(){
-  const PC検表テンプレ = システムコンテナスプレッドシート.getSheetByName('PC点検表');
+  const PC点検表テンプレ = システムコンテナスプレッドシート.getSheetByName('PC点検表');
   const 新規PC点検表 = PC点検表テンプレ.copyTo(PC点検DBスプレッドシート);
   新規PC点検表.setName(Utilities.formatDate(now, 'JST', 'yyyy-MM-dd'))
 
