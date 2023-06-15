@@ -9,6 +9,9 @@ function init(){
     return
   }
   点検データベース作成()
+
+  設定値の初期化()
+  
   ui.alert(
     '初期設定 完了',
     '全ての準備が終わりました。最後に、GASデプロイを作成してください。',
@@ -101,4 +104,13 @@ function 点検データベース作成(){
     ui.alert('初期設定 3/n', '次に進みます。データベースURLは、CONFIGシート内に必ず入力してください。', ui.ButtonSet.OK);
     return '継続';
   }
+}
+
+function 設定値の初期化(){
+  スクリプトプロパティ.setProperties({
+    充電中: JSON.stringify([]),
+    月例点検実施日: new Date(0),
+    隔週点検実施日: new Date(0),
+    PC点検実施日: new Date(0),
+  })
 }
