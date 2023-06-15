@@ -1,16 +1,3 @@
-function onOpen(){
-  const ui = SpreadsheetApp.getUi();
-  ui.createMenu('追加機能')
-    .addItem('セットアップ', 'init')
-    .addSeparator()
-    .addSubMenu(ui.createMenu('個別実行')
-      .addItem('トークン入力', 'トークン入力')
-      .addItem('通知テスト', '通知テスト')
-      .addItem('DB作成', '点検データベース作成')
-    )
-    .addToUi();
-}
-
 function init(){
   const ui = SpreadsheetApp.getUi();
 
